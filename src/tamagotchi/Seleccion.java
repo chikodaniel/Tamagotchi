@@ -1,0 +1,483 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package tamagotchi;
+
+import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.ProgressBar;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+import javax.swing.Timer;
+
+/**
+ *
+ * @author Tio Ranchero
+ */
+public class Seleccion extends javax.swing.JFrame {
+    int tamagotchiSeleccionado = 0;
+    int valor = 0;
+    String[] array_mascotas = {"Cuadrado", "Circulo", "Triangulo"};
+    String arrayLineas[] = new String [5];
+    
+    public Seleccion() {
+        setTitle("Tamagotchi Selection v2.000.2 Nintendo All Rights Reserved 2017");
+        setSize(250,250);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+        String ruta = "C:\\Program Files (x86)\\save_file.txt";
+        String linea_txt;
+        String imagen = "";
+        int indiceLineas = 0;
+        initComponents();
+        JLabel[] array_spaces = { lb_Space1, lb_Space2, lb_Space3, lb_Space4, lb_Space5 };
+        JLabel[] array_names = { lb_name1, lb_name2, lb_name3, lb_name4, lb_name5 };
+        JProgressBar[] array_energias = { pb_energia1, pb_energia2, pb_energia3, pb_energia4, pb_energia5 };
+        JLabel[] array_bordes = {lb_borde1, lb_borde2, lb_borde3, lb_borde4 , lb_borde5};
+        JButton[] array_botones = {bt_Mascota1, bt_Mascota2 , bt_Mascota3, bt_Mascota4 , bt_Mascota5};
+        
+        for (int i = 0; i < array_botones.length; i++){
+            array_botones[i].setOpaque(false);
+            array_botones[i].setContentAreaFilled(false);
+            array_botones[i].setBorderPainted(false);
+        }
+        
+        for (int i = 0; i < array_bordes.length; i++) {
+            array_bordes[i].setVisible(false);
+        }
+        
+        // Lectura de tamagotchis        
+        try {
+            BufferedReader lector = new BufferedReader(new FileReader(ruta));
+            while((linea_txt = lector.readLine()) != null){
+                arrayLineas[indiceLineas] = linea_txt;
+                indiceLineas++;
+            }
+            indiceLineas = 0;
+            for (indiceLineas = 0; indiceLineas < arrayLineas.length; indiceLineas++) {
+                if(arrayLineas[indiceLineas] != null){
+                    String[] parametros = arrayLineas[indiceLineas].split(",");
+                    // parametro 0 = Clase
+                    // parametro 1 = Nombre
+                    // parametro 2 = Status
+                    // parametro 3 = Vida (100 -> 0)
+                    // parametro 4 = Hambre (0 -> 100)
+                    // parametro 5 = Tristeza (0 -> 100)
+                    // parametro 6 = Suciedad (0 -> 100)
+                    // C,N,S,V,H,T,S
+                    
+                    // Carga de Imágenes
+                    array_spaces[indiceLineas].setIcon(new javax.swing.ImageIcon(getClass().getResource("/tamagotchi/imagenes/Nueva carpeta/" + parametros[0] + ".png")));
+                    // Carga de Nombres
+                    array_names[indiceLineas].setText(parametros[1]);
+                    // Carga de Vida
+                    array_energias[indiceLineas].setValue(Integer.parseInt(parametros[3]));            
+                }
+                else {
+                    //aqui se ocultan los elementos no usados
+                    array_spaces[indiceLineas].setVisible(false);
+                    array_names[indiceLineas].setVisible(false);
+                    array_energias[indiceLineas].setVisible(false);
+                }
+            }
+        } catch (IOException exception1) {
+            try {
+                BufferedWriter escritor = new BufferedWriter(new FileWriter(ruta));
+            } catch ( IOException exception2 ) {
+                JOptionPane.showMessageDialog(null,"No se pudo crear"  , "Reporte de Departamentos" , JOptionPane.INFORMATION_MESSAGE);
+            } finally {
+                for (indiceLineas = 0; indiceLineas < arrayLineas.length; indiceLineas++) {
+                    // Al no haber archivo de guardado se oculta todo
+                    array_spaces[indiceLineas].setVisible(false);
+                    array_names[indiceLineas].setVisible(false);
+                    array_energias[indiceLineas].setVisible(false);
+                }
+            }
+        }
+        pintar();
+    }
+   
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        lb_borde1 = new javax.swing.JLabel();
+        lb_borde2 = new javax.swing.JLabel();
+        lb_borde3 = new javax.swing.JLabel();
+        lb_borde4 = new javax.swing.JLabel();
+        lb_borde5 = new javax.swing.JLabel();
+        bt_crear = new javax.swing.JButton();
+        bt_jugar = new javax.swing.JButton();
+        lb_Space1 = new javax.swing.JLabel();
+        lb_Space2 = new javax.swing.JLabel();
+        lb_Space3 = new javax.swing.JLabel();
+        lb_Space4 = new javax.swing.JLabel();
+        lb_Space5 = new javax.swing.JLabel();
+        lb_name1 = new javax.swing.JLabel();
+        lb_name2 = new javax.swing.JLabel();
+        lb_name3 = new javax.swing.JLabel();
+        lb_name4 = new javax.swing.JLabel();
+        lb_name5 = new javax.swing.JLabel();
+        pb_energia1 = new javax.swing.JProgressBar();
+        pb_energia2 = new javax.swing.JProgressBar();
+        pb_energia3 = new javax.swing.JProgressBar();
+        pb_energia4 = new javax.swing.JProgressBar();
+        pb_energia5 = new javax.swing.JProgressBar();
+        lb_background = new javax.swing.JLabel();
+        bt_Mascota1 = new javax.swing.JButton();
+        bt_Mascota2 = new javax.swing.JButton();
+        bt_Mascota3 = new javax.swing.JButton();
+        bt_Mascota4 = new javax.swing.JButton();
+        bt_Mascota5 = new javax.swing.JButton();
+
+        jLabel3.setText("jLabel3");
+
+        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(null);
+
+        lb_borde1.setForeground(new java.awt.Color(255, 255, 0));
+        lb_borde1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 51)));
+        jPanel1.add(lb_borde1);
+        lb_borde1.setBounds(20, 15, 630, 90);
+
+        lb_borde2.setForeground(new java.awt.Color(255, 255, 0));
+        lb_borde2.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 51)));
+        jPanel1.add(lb_borde2);
+        lb_borde2.setBounds(20, 105, 630, 90);
+
+        lb_borde3.setForeground(new java.awt.Color(255, 255, 0));
+        lb_borde3.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 51)));
+        jPanel1.add(lb_borde3);
+        lb_borde3.setBounds(20, 195, 630, 90);
+
+        lb_borde4.setForeground(new java.awt.Color(255, 255, 0));
+        lb_borde4.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 51)));
+        jPanel1.add(lb_borde4);
+        lb_borde4.setBounds(20, 285, 630, 90);
+
+        lb_borde5.setForeground(new java.awt.Color(255, 255, 0));
+        lb_borde5.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 51)));
+        jPanel1.add(lb_borde5);
+        lb_borde5.setBounds(20, 375, 630, 90);
+
+        bt_crear.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+        bt_crear.setText("Crear Tamagotchi");
+        bt_crear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_crearActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_crear);
+        bt_crear.setBounds(20, 490, 190, 40);
+
+        bt_jugar.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+        bt_jugar.setText("Jugar");
+        bt_jugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_jugarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_jugar);
+        bt_jugar.setBounds(460, 490, 190, 40);
+        jPanel1.add(lb_Space1);
+        lb_Space1.setBounds(60, 40, 40, 40);
+        jPanel1.add(lb_Space2);
+        lb_Space2.setBounds(60, 130, 40, 40);
+        jPanel1.add(lb_Space3);
+        lb_Space3.setBounds(60, 220, 40, 40);
+        jPanel1.add(lb_Space4);
+        lb_Space4.setBounds(60, 310, 40, 40);
+        jPanel1.add(lb_Space5);
+        lb_Space5.setBounds(60, 400, 40, 40);
+
+        lb_name1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(lb_name1);
+        lb_name1.setBounds(140, 50, 180, 20);
+
+        lb_name2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(lb_name2);
+        lb_name2.setBounds(140, 140, 180, 20);
+
+        lb_name3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(lb_name3);
+        lb_name3.setBounds(140, 230, 180, 20);
+
+        lb_name4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(lb_name4);
+        lb_name4.setBounds(140, 320, 180, 20);
+
+        lb_name5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(lb_name5);
+        lb_name5.setBounds(140, 410, 180, 20);
+
+        pb_energia1.setForeground(new java.awt.Color(255, 255, 255));
+        pb_energia1.setValue(50);
+        jPanel1.add(pb_energia1);
+        pb_energia1.setBounds(390, 50, 170, 20);
+
+        pb_energia2.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(pb_energia2);
+        pb_energia2.setBounds(390, 140, 170, 20);
+
+        pb_energia3.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(pb_energia3);
+        pb_energia3.setBounds(390, 230, 170, 20);
+
+        pb_energia4.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(pb_energia4);
+        pb_energia4.setBounds(390, 320, 170, 20);
+
+        pb_energia5.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(pb_energia5);
+        pb_energia5.setBounds(390, 410, 170, 20);
+
+        lb_background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tamagotchi/imagenes/Nueva carpeta/8-bit-purple-sunset-40894-1920x1080.jpg"))); // NOI18N
+        lb_background.setText("jLabel1");
+        jPanel1.add(lb_background);
+        lb_background.setBounds(-10, -310, 700, 920);
+
+        bt_Mascota1.setBackground(new java.awt.Color(255, 255, 255));
+        bt_Mascota1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_Mascota1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_Mascota1);
+        bt_Mascota1.setBounds(20, 15, 630, 90);
+
+        bt_Mascota2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_Mascota2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_Mascota2);
+        bt_Mascota2.setBounds(20, 105, 630, 90);
+
+        bt_Mascota3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_Mascota3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_Mascota3);
+        bt_Mascota3.setBounds(20, 195, 630, 90);
+
+        bt_Mascota4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_Mascota4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_Mascota4);
+        bt_Mascota4.setBounds(20, 285, 630, 90);
+
+        bt_Mascota5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_Mascota5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bt_Mascota5);
+        bt_Mascota5.setBounds(20, 375, 630, 90);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void bt_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_crearActionPerformed
+        if(!"".equals(lb_name5.getText())){
+            JOptionPane.showMessageDialog(null, "No se puede crear mas", "Error ", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            this.dispose();
+            Creacion nuevoFrame = new Creacion();
+            nuevoFrame.setLocation(this.getLocation());
+            nuevoFrame.setVisible(true);
+        }
+    }//GEN-LAST:event_bt_crearActionPerformed
+
+    private void bt_Mascota1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Mascota1ActionPerformed
+        if(!"".equals(lb_name1.getText())){
+            seleccionar(0);
+        }
+    }//GEN-LAST:event_bt_Mascota1ActionPerformed
+
+    private void bt_Mascota2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Mascota2ActionPerformed
+        if(!"".equals(lb_name2.getText())){
+            seleccionar(1);
+        }
+    }//GEN-LAST:event_bt_Mascota2ActionPerformed
+
+    private void bt_Mascota3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Mascota3ActionPerformed
+        if(!"".equals(lb_name3.getText())){
+            seleccionar(2);
+        }
+    }//GEN-LAST:event_bt_Mascota3ActionPerformed
+
+    private void bt_Mascota4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Mascota4ActionPerformed
+        if(!"".equals(lb_name4.getText())){
+            seleccionar(3);
+        }
+    }//GEN-LAST:event_bt_Mascota4ActionPerformed
+
+    private void bt_Mascota5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_Mascota5ActionPerformed
+        if(!"".equals(lb_name5.getText())){
+            seleccionar(4);
+        }
+    }//GEN-LAST:event_bt_Mascota5ActionPerformed
+
+    private void bt_jugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_jugarActionPerformed
+        if(tamagotchiSeleccionado != 0){
+            this.dispose();
+            String[] parametros = arrayLineas[tamagotchiSeleccionado - 1].split(",");
+            Mascota miMascota = new Mascota (
+                    parametros[0],//clase
+                    parametros[1],//nombre
+                    parametros[2],//status
+                    Integer.parseInt(parametros[3]),//vida
+                    Integer.parseInt(parametros[4]),//tristeza
+                    Integer.parseInt(parametros[5]));//suciedad
+                    
+            Juego nuevoFrame = new Juego(miMascota, tamagotchiSeleccionado);
+            nuevoFrame.setLocation(this.getLocation());
+            nuevoFrame.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Porfavor Selecciona un Tamagotchi", "Error de Seleccion", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_bt_jugarActionPerformed
+
+    public void seleccionar(int indice){
+        JLabel[] array_bordes = {lb_borde1, lb_borde2, lb_borde3, lb_borde4 , lb_borde5};
+        
+        for (int i = 0; i < array_bordes.length; i++) {
+            if (i == indice){
+                array_bordes[i].setVisible(true);
+            } else {
+                array_bordes[i].setVisible(false);
+            }
+        }
+        tamagotchiSeleccionado = indice + 1;
+    }
+    
+    public void pintar (){
+        JProgressBar[] array_energias = { pb_energia1, pb_energia2, pb_energia3, pb_energia4, pb_energia5 };
+        for (int i =0; i < array_energias.length; i++){
+            
+            if (array_energias[i].getValue() >=60 ){
+                array_energias[i].setForeground(Color.green);
+            }
+            else if(array_energias[i].getValue() >=30){
+                array_energias[i].setForeground(Color.yellow);
+            }
+            else if(array_energias[i].getValue() >0){
+                array_energias[i].setForeground(Color.red);
+            }
+                
+        }
+        
+    }
+
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Seleccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Seleccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Seleccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Seleccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Seleccion().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_Mascota1;
+    private javax.swing.JButton bt_Mascota2;
+    private javax.swing.JButton bt_Mascota3;
+    private javax.swing.JButton bt_Mascota4;
+    private javax.swing.JButton bt_Mascota5;
+    private javax.swing.JButton bt_crear;
+    private javax.swing.JButton bt_jugar;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lb_Space1;
+    private javax.swing.JLabel lb_Space2;
+    private javax.swing.JLabel lb_Space3;
+    private javax.swing.JLabel lb_Space4;
+    private javax.swing.JLabel lb_Space5;
+    private javax.swing.JLabel lb_background;
+    private javax.swing.JLabel lb_borde1;
+    private javax.swing.JLabel lb_borde2;
+    private javax.swing.JLabel lb_borde3;
+    private javax.swing.JLabel lb_borde4;
+    private javax.swing.JLabel lb_borde5;
+    private javax.swing.JLabel lb_name1;
+    private javax.swing.JLabel lb_name2;
+    private javax.swing.JLabel lb_name3;
+    private javax.swing.JLabel lb_name4;
+    private javax.swing.JLabel lb_name5;
+    private javax.swing.JProgressBar pb_energia1;
+    private javax.swing.JProgressBar pb_energia2;
+    private javax.swing.JProgressBar pb_energia3;
+    private javax.swing.JProgressBar pb_energia4;
+    private javax.swing.JProgressBar pb_energia5;
+    // End of variables declaration//GEN-END:variables
+}
